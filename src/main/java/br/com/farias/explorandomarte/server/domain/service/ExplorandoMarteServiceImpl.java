@@ -10,6 +10,9 @@ import br.com.farias.explorandomarte.server.domain.model.Sonda;
 /**
  * Serviço do domínio responsável por controlar as instâncias de planalto e sonda
  * e invocar os métodos nos objetos de domínio.
+ * Utilizei o padrão Singleton levando em conta que só podem existir uma
+ * única instância de planalto para serem controladas.
+ * 
  * @author Rafael A. Farias
  *
  */
@@ -30,8 +33,14 @@ public class ExplorandoMarteServiceImpl implements ExplorarMarteService {
 		return instance;
 	}
 
+	/**
+	 * Obtêm a sonda pela posição x e y ou cria uma nova se necessário
+	 * e executa todos os comandos de controle recebidos
+	 * Marcado como synchronized para não permitir outras operações concorrentes
+	 * na mesma sonda ou em outras sondas.
+	 */
 	@Override
-	public void controlarSonda(int posicaoX, int posicaoY, char direcao, char... comandos) {
+	public synchronized void controlarSonda(int posicaoX, int posicaoY, char direcao, char... comandos) {
 		Sonda sonda = planalto.buscarSonda(posicaoX, posicaoX);
 		//Adiciona somente se já não houver sonda nesta posição
 		if (sonda == null) {
@@ -57,8 +66,15 @@ public class ExplorandoMarteServiceImpl implements ExplorarMarteService {
 		}
 	}
 
+	/**
+	 * Define um novo planalto conforme os parâmetros de limite ou
+	 * reseta a instância atual para uma nova instância de planalto
+	 * Marcado como synchronized para não permitir que o planalto seja
+	 * redefinido enquanto operações de controle de sondas ainda estejam
+	 * em execução.
+	 */
 	@Override
-	public void definirPlanalto(int limiteX, int limiteY) {
+	public synchronized void definirPlanalto(int limiteX, int limiteY) {
 		planalto = new Planalto(limiteX, limiteY);		
 	}
 
