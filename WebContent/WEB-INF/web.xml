@@ -10,6 +10,6 @@
  
 	<servlet-mapping>
 		<servlet-name>Jersey Servlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/rest_api/*</url-pattern>
 	</servlet-mapping>
 </web-app>
