@@ -2,6 +2,7 @@ package br.com.farias.explorandomarte.server.domain.service;
 
 import java.util.Set;
 
+import br.com.farias.explorandomarte.server.domain.exception.PosicaoInvalidaException;
 import br.com.farias.explorandomarte.server.domain.model.DirecaoRosaDosVentos;
 import br.com.farias.explorandomarte.server.domain.model.Lado;
 import br.com.farias.explorandomarte.server.domain.model.Planalto;
@@ -41,10 +42,14 @@ public class ExplorandoMarteServiceImpl implements ExplorarMarteService {
 	 */
 	@Override
 	public synchronized void controlarSonda(int posicaoX, int posicaoY, char direcao, char... comandos) {
+		if (posicaoX < 0 || posicaoY < 0) {
+			throw new PosicaoInvalidaException(posicaoX, posicaoY);
+		}
+		DirecaoRosaDosVentos direcaoRosaDosVentos = DirecaoRosaDosVentos.fromChar(direcao);
 		Sonda sonda = planalto.buscarSonda(posicaoX, posicaoX);
 		//Adiciona somente se já não houver sonda nesta posição
 		if (sonda == null) {
-			sonda = new Sonda(posicaoX, posicaoY, DirecaoRosaDosVentos.fromChar(direcao));
+			sonda = new Sonda(posicaoX, posicaoY, direcaoRosaDosVentos);
 			sonda.setPlanalto(planalto);
 			planalto.add(sonda);
 		}
@@ -61,7 +66,7 @@ public class ExplorandoMarteServiceImpl implements ExplorarMarteService {
 				sonda.mover();
 				break;
 			default:
-				break;
+				throw new IllegalArgumentException("O comando informado é inválido: comando=" + c);
 			}
 		}
 	}
@@ -75,7 +80,11 @@ public class ExplorandoMarteServiceImpl implements ExplorarMarteService {
 	 */
 	@Override
 	public synchronized void definirPlanalto(int limiteX, int limiteY) {
-		planalto = new Planalto(limiteX, limiteY);		
+		if (limiteX > 0 && limiteY > 0) {
+			planalto = new Planalto(limiteX, limiteY);
+		} else {
+			throw new IllegalArgumentException("O parâmetro limiteX e limiteY são inválidos. limiteX=" + limiteX + ", limiteY=" + limiteY);
+		}	
 	}
 
 	@Override

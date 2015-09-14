@@ -6,4 +6,8 @@ public class PosicaoInvalidaException extends DomainException {
 		super("A posição informada é inválida: ["+ posicaoX +"," + posicaoY +
 				"] limites: ["+ limiteX +","+ limiteY +"]" );
 	}
+
+	public PosicaoInvalidaException(int posicaoX, int posicaoY) {
+		super("A posição informada é inválida: ["+ posicaoX +"," + posicaoY +"]");
+	}
 }
