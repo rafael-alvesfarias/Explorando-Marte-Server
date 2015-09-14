@@ -19,13 +19,13 @@ public class DirecaoRosaDosVentos extends Direcao {
 	public static DirecaoRosaDosVentos fromChar(char direcao) {
 		switch(direcao) {
 			case 'n':
-			case 'N': return N;
+			case 'N': return new DirecaoRosaDosVentos(90);
 			case 'e':
-			case 'E': return E;
+			case 'E': return new DirecaoRosaDosVentos(0);
 			case 's':
-			case 'S': return S;
+			case 'S': return new DirecaoRosaDosVentos(270);
 			case 'w':
-			case 'W': return W;
+			case 'W': return new DirecaoRosaDosVentos(180);
 			default: throw new IllegalArgumentException("Parãmetro direção inválido: " + direcao);
 		}
 	}
@@ -38,18 +38,6 @@ public class DirecaoRosaDosVentos extends Direcao {
 	public static DirecaoRosaDosVentos fromString(String direcao) {
 		return fromChar(direcao.charAt(0));
 	}
-
-	//Norte
-	public static final DirecaoRosaDosVentos N = new DirecaoRosaDosVentos(90);
-	
-	//Leste
-	public static final DirecaoRosaDosVentos E = new DirecaoRosaDosVentos(0);
-	
-	//Sul
-	public static final DirecaoRosaDosVentos S = new DirecaoRosaDosVentos(270);
-	
-	//Oeste
-	public static final DirecaoRosaDosVentos W = new DirecaoRosaDosVentos(180);
 	
 	
 	/**

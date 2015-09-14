@@ -3,6 +3,8 @@ package br.com.farias.explorandomarte.server.domain.model;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import br.com.farias.explorandomarte.server.domain.exception.PosicaoInvalidaException;
+
 public class Planalto {
 	
 	private int tamanhoX;
@@ -13,6 +15,9 @@ public class Planalto {
 	private final Set<Sonda> sondas = new LinkedHashSet<Sonda>();
 	
 	public Planalto(int tamanhoX, int tamanhoY) {
+		if (tamanhoX <= 0 || tamanhoY <= 0) {
+			throw new IllegalArgumentException("O tamanho informado é inválido: [" + tamanhoX + "," + tamanhoY + "]");
+		}
 		this.tamanhoX = tamanhoX;
 		this.tamanhoY = tamanhoY;
 	}
@@ -26,12 +31,11 @@ public class Planalto {
 				return false;
 			}
 		} else {
-			//TODO throw new PosicaoNaoDisponivelException(sonda.getPosicaoX(), sonda.getPosicaoY());
-			throw new RuntimeException();
+			throw new PosicaoInvalidaException(sonda.getPosicaoX(), sonda.getPosicaoY(), tamanhoX, tamanhoY);
 		}
 	}
 	
-	private boolean posicaoValida(int posicaoX, int posicaoY) {
+	public boolean posicaoValida(int posicaoX, int posicaoY) {
 		return posicaoX <= tamanhoX && posicaoY <= tamanhoY;
 	}
 	

@@ -19,28 +19,33 @@ public class Sonda {
 	
 	private Planalto planalto;
 	
+	/**
+	 * Construtor padrão não deve ser utilizado, criado somente para uso de frameworks 
+	 */
+	@Deprecated
 	public Sonda(){
 		
 	}
 
 	public Sonda(int posicaoX, int posicaoY, DirecaoRosaDosVentos direcao) {
+		if(direcao == null) {
+			throw new IllegalArgumentException("O parâmetro direção não pode ser nulo: " + direcao);
+		}
 		this.posicaoX = posicaoX;
 		this.posicaoY = posicaoY;
 		this.direcao = direcao;
 	}
 	
 	public Sonda(int posicaoX, int posicaoY) {
-		this.posicaoX = posicaoX;
-		this.posicaoY = posicaoY;
-		this.direcao = DirecaoRosaDosVentos.N;
+		this(posicaoX, posicaoY, DirecaoRosaDosVentos.fromChar('N'));
 	}
 
 	public void mover() {
 		int nx = posicaoX + (int) (1 * direcao.getFatorX());
 		int ny = posicaoY + (int) (1 * direcao.getFatorY());
 		
-		//Se move somente a posição estiver disponível
-		if (planalto != null && planalto.posicaoDisponivel(nx, ny)) {
+		//Se move somente a posição estiver válida
+		if (planalto != null && planalto.posicaoValida(nx, ny)) {
 			posicaoX = nx;
 			posicaoY = ny;
 		}
