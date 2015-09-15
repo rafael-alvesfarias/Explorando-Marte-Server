@@ -19,7 +19,7 @@ Tecnologias usadas
   Camada responsável por coordenar as chamadas ao domínio e expor os recursos REST de forma
   a desacoplar as tecnologias Rest com a lógica de domínio.
   
-  - Domain
+ - Domain
   
   Camada responsável por conter o modelo com a lógica da aplicação e expor os serviços de modelo de forma organizada.
 
