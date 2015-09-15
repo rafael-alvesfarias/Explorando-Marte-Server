@@ -10,8 +10,8 @@ Tecnologias usadas
  - JUnit para testes unitários;
  - JMockit para mocks e verificações nos testes unitários.
  
- Design
- -------
+Design
+--------
  Tive um pouco de dificuldade de fazer uma estrutura de pacotes que atendesse um modelo não anêmico. No final das contas,
  tentei utilizar uma estrutura baseada no DDD separada nas seguintes camadas:
  - Application
